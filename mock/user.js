@@ -1,4 +1,3 @@
-
 const tokens = {
   admin: {
     token: 'admin'
@@ -9,16 +8,16 @@ const tokens = {
 }
 
 const users = {
-  'admin-token': {
+  'admin': {
     roles: ['admin'],
     introduction: 'I am a super administrator',
-    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+    avatar: 'https://hezepeng-1252705718.cos.ap-guangzhou.myqcloud.com/icon/1%20(17).jpg',
     name: 'Super Admin'
   },
-  'editor-token': {
+  'editor': {
     roles: ['editor'],
     introduction: 'I am an editor',
-    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+    avatar: 'https://hezepeng-1252705718.cos.ap-guangzhou.myqcloud.com/icon/1%20(64).jpg',
     name: 'Normal Editor'
   }
 }
@@ -42,7 +41,8 @@ export default [
 
       return {
         code: 20000,
-        data: token
+        data: token,
+        message: '欢迎回来！'
       }
     }
   },

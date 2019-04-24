@@ -41,15 +41,14 @@ export const constantRouterMap = [
     path: '/',
     component: Layout,
     redirect: '/dashboard',
-    children: [
-      {
-        path: 'dashboard',
-        name: 'Dashboard',
-        component: () => import('@/views/home/Home'),
-        meta: { title: '后台管理系统', icon: 'dashboard' }
-      }
-    ]
+    children: [{
+      path: 'dashboard',
+      name: 'Dashboard',
+      component: () => import('@/views/dashboard/Index'),
+      meta: { title: '考勤管理系统控制台', icon: 'dashboard' }
+    }]
   }
+
   // {
   //   path: '/example',
   //   component: Layout,
@@ -60,13 +59,13 @@ export const constantRouterMap = [
   //     {
   //       path: 'table',
   //       name: 'Table',
-  //       component: () => import('@/views/home/Home'),
+  //       component: () => import('@/views/dashboard/Index'),
   //       meta: {title: 'Table'}
   //     },
   //     {
   //       path: 'tree',
   //       name: 'Tree',
-  //       component: () => import('@/views/home/Home'),
+  //       component: () => import('@/views/dashboard/Index'),
   //       meta: {title: 'Tree'}
   //     }
   //   ]
@@ -81,6 +80,7 @@ export const asyncRouterMap = [
     component: Layout,
     name: 'Permission',
     redirect: '/permission/admin',
+    alwaysShow: true,
     meta: {
       title: '权限测试页面',
       icon: 'nested',
@@ -109,6 +109,58 @@ export const asyncRouterMap = [
           icon: 'addteam',
           noCache: true
         } // 页面需要的权限
+      }
+    ]
+  },
+
+  {
+    path: '/person',
+    component: Layout,
+    redirect: '/person/list',
+    name: 'Person',
+    alwaysShow: true,
+    meta: { title: '员工管理', icon: 'example', role: ['admin'] },
+    children: [
+      {
+        path: 'add',
+        name: 'NewPerson',
+        component: () => import('@/views/person/NewPerson'),
+        meta: { title: '新增员工', icon: 'form', role: ['admin'] }
+      },
+      {
+        path: 'list',
+        name: 'PersonList',
+        component: () => import('@/views/person/PersonList'),
+        meta: { title: '员工列表', icon: 'table', role: ['admin'] }
+      }
+    ]
+  },
+
+  {
+    path: '/attendance',
+    component: Layout,
+    redirect: '/attendance/list',
+    alwaysShow: true,
+    name: 'Attendance',
+    meta: { title: '考勤管理', icon: 'tree', role: ['editor', 'admin'] },
+    children: [
+      {
+        path: 'add',
+        name: 'NewAttendance',
+        component: () => import('@/views/attendance/NewAttendance'),
+        meta: { title: '考勤打卡', icon: 'form', role: ['editor'] }
+      },
+      {
+        path: 'list',
+        name: 'AttendanceList',
+        component: () => import('@/views/attendance/AttendanceList'),
+        meta: { title: '考勤列表', icon: 'table', role: ['admin'] }
+      },
+      {
+        path: 'mylist',
+        name: 'MyAttendanceList',
+        component: () => import('@/views/attendance/AttendanceList'),
+        meta: { title: '考勤记录', icon: 'table', role: ['editor'] }
       }
     ]
   },
