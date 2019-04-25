@@ -59,9 +59,7 @@
             prop="remark"
             label="备注"
           />
-          <el-table-column
-            align="center"
-          >
+          <el-table-column align="center">
             <template slot="header" slot-scope="scope">
               <el-input
                 v-model="search"
@@ -90,21 +88,25 @@
 </template>
 
 <script>
-import { getAttendanceList } from '../../api/attendance'
+import { getMyAttendanceList } from '@/api/attendance'
 
 export default {
-  name: 'AttendanceList',
-
+  name: 'MyHistoryAttendance',
   data() {
     return {
       tableData: [],
       search: ''
     }
   },
+  computed: {
+    'username': function() {
+      return this.$store.getters.username
+    }
+  },
 
   mounted: function() {
     const _this = this
-    getAttendanceList().then(response => {
+    getMyAttendanceList(this.username).then(response => {
       _this.tableData = response.data
     })
   },
@@ -115,17 +117,6 @@ export default {
     },
     filterDepartment(value, row) {
       return row.department === value
-    },
-    handleEdit(index, row) {
-      // TODO 点编辑 弹出框可以修改部门和备注
-      // TODO 部门是select 备注是textarea  这两个直接复制PersonEdit页面的代码 点击保存的时候 把整个row的信息打印出来 并且更改回显到表格中
-      this.onRowUpdate(row)
-    },
-    onRowUpdate(row) {
-      this.tableData.filter(function(item) {
-        return item.id === row.id
-      })[0] = row
-      console.log(row)
     }
   }
 }

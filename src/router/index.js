@@ -137,6 +137,23 @@ export const asyncRouterMap = [
   },
 
   {
+    path: '/my',
+    component: Layout,
+    redirect: '/my/edit',
+    name: 'My',
+    alwaysShow: true,
+    meta: { title: '个人信息', icon: 'example', role: ['editor'] },
+    children: [
+      {
+        path: 'edit',
+        name: 'EditPerson',
+        component: () => import('@/views/person/EditPerson'),
+        meta: { title: '查看编辑', icon: 'form', role: ['editor'] }
+      }
+    ]
+  },
+
+  {
     path: '/attendance',
     component: Layout,
     redirect: '/attendance/list',
@@ -157,10 +174,10 @@ export const asyncRouterMap = [
         meta: { title: '考勤列表', icon: 'table', role: ['admin'] }
       },
       {
-        path: 'mylist',
-        name: 'MyAttendanceList',
-        component: () => import('@/views/attendance/AttendanceList'),
-        meta: { title: '考勤记录', icon: 'table', role: ['editor'] }
+        path: 'my',
+        name: 'MyHistoryAttendance',
+        component: () => import('@/views/attendance/MyHistoryAttendance'),
+        meta: { title: '历史考勤', icon: 'table', role: ['editor'] }
       }
     ]
   },

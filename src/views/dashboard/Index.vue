@@ -16,7 +16,7 @@ export default {
   name: 'Index',
   computed: {
     ...mapGetters(['name', 'roles'])
-  },
+  }
 }
 </script>
 
