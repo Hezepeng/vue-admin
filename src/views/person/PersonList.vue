@@ -6,9 +6,9 @@
           :data="tableData.filter(data => !search || data.id.toLowerCase().includes(search.toLowerCase()) ||
             data.name.toLowerCase().includes(search.toLowerCase()) ||
             data.sex.toLowerCase().includes(search.toLowerCase()) ||
+            data.school.toLowerCase().includes(search.toLowerCase()) ||
             data.department.toLowerCase().includes(search.toLowerCase()) ||
-            data.startTimes.toString().toLowerCase().includes(search.toLowerCase()) ||
-            data.endTimes.toString().toLowerCase().includes(search.toLowerCase()) ||
+            data.position.toLowerCase().includes(search.toLowerCase()) ||
             data.remark.toLowerCase().includes(search.toLowerCase()))"
           height="600"
           border
@@ -25,15 +25,21 @@
             width="120"
           />
           <el-table-column
+            prop="password"
+            label="密码"
+            show-overflow-tooltip
+          />
+          <el-table-column
             prop="sex"
             label="性别"
             sortable
             width="80"
           />
           <el-table-column
-            prop="password"
-            label="密码"
-            show-overflow-tooltip
+            prop="school"
+            label="毕业院校"
+            sortable
+            width="120"
           />
           <el-table-column
             prop="department"
@@ -45,34 +51,14 @@
             filter-placement="bottom-end"
           />
           <el-table-column
-            prop="startTimes"
-            label="上班打卡次数"
-            sortable
-            width="140"
-          />
-          <el-table-column
-            prop="endTimes"
-            label="下班打卡次数"
-            sortable
-            width="140"
-          />
-          <el-table-column
-            prop="state"
-            label="今日状态"
+            prop="position"
+            label="职位"
             width="120"
             sortable
-            :filters="[{ text: '上班', value: '上班' }, { text: '请假', value: '请假' }, { text: '出差', value: '出差' }]"
-            :filter-method="filterState"
+            :filters="[{ text: '员工', value: '员工' }, { text: '组长', value: '组长' }, { text: '主管', value: '主管' }, { text: '总经理', value: '总经理' }]"
+            :filter-method="filterPosition"
             filter-placement="bottom-end"
-          >
-            <template slot-scope="scope">
-              <el-tag
-                :type="scope.row.state === '上班' ? 'success' : scope.row.state === '请假' ? 'danger' :'primary'"
-                disable-transitions
-              >{{ scope.row.state }}
-              </el-tag>
-            </template>
-          </el-table-column>
+          />
           <el-table-column
             prop="remark"
             label="备注信息"
@@ -115,6 +101,14 @@
                 <el-option label="销售" value="销售" />
               </el-select>
             </el-col>
+            <el-col :span="16">
+              <el-select v-model="editRow.position" placeholder="选择员工的职位">
+                <el-option label="员工" value="员工" />
+                <el-option label="组长" value="组长" />
+                <el-option label="主管" value="主管" />
+                <el-option label="总经理" value="总经理" />
+              </el-select>
+            </el-col>
           </el-form-item>
           <el-form-item label="备注信息">
             <el-col :span="16">
@@ -139,7 +133,7 @@ import { deletePerson, updatePerson } from '@/api/person'
 export default {
   name: 'PersonList',
 
-  data () {
+  data() {
     return {
       tableData: [],
       search: '',
@@ -164,17 +158,17 @@ export default {
   },
 
   methods: {
-    filterState (value, row) {
-      return row.state === value
-    },
-    filterDepartment (value, row) {
+    filterDepartment(value, row) {
       return row.department === value
     },
-    onEditRow (index, row) {
+    filterPosition(value, row) {
+      return row.position === value
+    },
+    onEditRow(index, row) {
       this.editRow = deepCopy(row)
       this.showDialog = true
     },
-    onSaveEditRow () {
+    onSaveEditRow() {
       const _this = this
       const row = this.editRow
       updatePerson(this.editRow).then(response => {
@@ -197,7 +191,7 @@ export default {
         _this.showDialog = false
       })
     },
-    onDeleteRow (index, row) {
+    onDeleteRow(index, row) {
       deletePerson(row).then(response => {
         this.tableData.splice(this.tableData.indexOf(row), 1)
         this.$message({

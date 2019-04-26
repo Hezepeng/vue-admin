@@ -45,7 +45,7 @@ export const constantRouterMap = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/Index'),
-      meta: { title: '考勤管理系统控制台', icon: 'dashboard' }
+      meta: { title: '人事管理系统控制台', icon: 'dashboard' }
     }]
   }
 
@@ -75,44 +75,6 @@ export const constantRouterMap = [
 // 异步挂载的路由
 // 动态需要根据权限加载的路由表
 export const asyncRouterMap = [
-  // {
-  //   path: '/permission',
-  //   component: Layout,
-  //   name: 'Permission',
-  //   redirect: '/permission/admin',
-  //   alwaysShow: true,
-  //   meta: {
-  //     title: '权限测试页面',
-  //     icon: 'nested',
-  //     role: ['admin']
-  //   },
-  //   children: [
-  //     {
-  //       path: 'admin',
-  //       component: () => import('@/views/permission/RootPermission'),
-  //       name: 'AdminPage',
-  //       meta: {
-  //         role: ['admin', 'super_editor'],
-  //         title: '权限测试',
-  //         icon: 'checklist',
-  //         noCache: true
-  //         // 页面需要的权限
-  //       }
-  //     },
-  //     {
-  //       path: 'child',
-  //       component: () => import('@/views/permission/AdminPage'),
-  //       name: 'AdminPage',
-  //       meta: {
-  //         role: ['admin', 'super_editor'],
-  //         title: '子权限测试页',
-  //         icon: 'addteam',
-  //         noCache: true
-  //       } // 页面需要的权限
-  //     }
-  //   ]
-  // },
-
   {
     path: '/person',
     component: Layout,
@@ -178,6 +140,35 @@ export const asyncRouterMap = [
         name: 'MyHistoryAttendance',
         component: () => import('@/views/attendance/MyHistoryAttendance'),
         meta: { title: '历史考勤', icon: 'table', role: ['editor'] }
+      }
+    ]
+  },
+
+  {
+    path: '/vacation',
+    component: Layout,
+    redirect: '/vacation/list',
+    alwaysShow: true,
+    name: 'Vacation',
+    meta: { title: '请假管理', icon: 'tree', role: ['editor', 'admin'] },
+    children: [
+      {
+        path: 'add',
+        name: 'NewVacation',
+        component: () => import('@/views/vacation/NewVacation'),
+        meta: { title: '申请请假', icon: 'form', role: ['editor'] }
+      },
+      {
+        path: 'list',
+        name: 'VacationList',
+        component: () => import('@/views/vacation/VacationList'),
+        meta: { title: '请假列表', icon: 'table', role: ['admin'] }
+      },
+      {
+        path: 'my',
+        name: 'MyHistoryVacation',
+        component: () => import('@/views/vacation/MyHistoryVacation'),
+        meta: { title: '请假历史', icon: 'table', role: ['editor'] }
       }
     ]
   },

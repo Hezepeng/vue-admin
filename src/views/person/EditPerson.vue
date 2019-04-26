@@ -11,6 +11,11 @@
           <el-input v-model="form.name" />
         </el-col>
       </el-form-item>
+      <el-form-item label="姓名" prop="school">
+        <el-col :span="10">
+          <el-input v-model="form.school" />
+        </el-col>
+      </el-form-item>
       <el-form-item label="密码" prop="password">
         <el-col :span="10">
           <el-input v-model="form.password" type="password" />
@@ -33,20 +38,17 @@
           </el-select>
         </el-col>
       </el-form-item>
-      <el-form-item label="当前状态" prop="state">
+      <el-form-item label="职位" prop="position">
         <el-col :span="10">
-          <el-select v-model="form.state" placeholder="设置我当前的状态">
-            <el-option label="上班" value="上班" />
-            <el-option label="请假" value="请假" />
-            <el-option label="出差" value="出差" />
+          <el-select v-model="form.position" placeholder="选择员工的职位" disabled>
+            <el-option label="员工" value="员工" />
+            <el-option label="组长" value="组长" />
+            <el-option label="主管" value="主管" />
+            <el-option label="总经理" value="总经理" />
           </el-select>
         </el-col>
       </el-form-item>
-      <el-form-item label="备注信息">
-        <el-col :span="10">
-          <el-input v-model="form.remark" type="textarea" rows="6" />
-        </el-col>
-      </el-form-item>
+
       <el-form-item>
         <el-button type="primary" :disabled="!infoChanged" @click="onSubmit">保存信息</el-button>
       </el-form-item>
@@ -79,20 +81,19 @@ export default {
       form: {
         id: '',
         name: '',
-        idCard: '',
+        position: '',
+        school: '',
         sex: '',
         department: '',
-        entryTime: null,
         remark: ''
       },
       formRules: {
         name: [{ required: true, trigger: 'blur', message: '姓名不能为空' }],
-        // idCard: [{ required: true, trigger: 'blur', validator: validateIdCard }],
+        school: [{ required: true, trigger: 'blur', message: '毕业院校不能为空' }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }],
         sex: [{ required: true, trigger: 'blur', message: '性别不能为空' }],
         department: [{ required: true, trigger: 'blur', message: '部门不能为空' }],
-        entryTime: [{ required: true, trigger: 'blur', message: '入职时间不能为空' }],
-        state: [{ required: true, trigger: 'blur', message: '请选择你当前的状态' }]
+        position: [{ required: true, trigger: 'blur', message: '职位不能为空' }]
       },
       startRender: false,
       infoChanged: false

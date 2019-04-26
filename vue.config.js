@@ -2,7 +2,7 @@
 const defaultSettings = require('./src/settings.js')
 const path = require('path')
 const resolve = dir => path.join(__dirname, dir)
-const name = defaultSettings.title || '在线考勤管理系统' // page title
+const name = defaultSettings.title || '人事管理系统' // page title
 const port = 8080 // dev port
 
 module.exports = {

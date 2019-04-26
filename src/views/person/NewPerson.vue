@@ -17,7 +17,11 @@
           <el-radio label="女" />
         </el-radio-group>
       </el-form-item>
-
+      <el-form-item label="毕业院校" prop="school">
+        <el-col :span="10">
+          <el-input v-model="form.school" />
+        </el-col>
+      </el-form-item>
       <el-form-item label="入职部门" prop="department">
         <el-col :span="10">
           <el-select v-model="form.department" placeholder="选择员工所属部分">
@@ -28,9 +32,14 @@
           </el-select>
         </el-col>
       </el-form-item>
-      <el-form-item label="入职时间" prop="entryTime">
+      <el-form-item label="职位" prop="position">
         <el-col :span="10">
-          <el-date-picker v-model="form.entryTime" type="date" placeholder="选择员工开始入职时间" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" style="width: 100%;" />
+          <el-select v-model="form.position" placeholder="选择员工的职位">
+            <el-option label="员工" value="员工" />
+            <el-option label="组长" value="组长" />
+            <el-option label="主管" value="主管" />
+            <el-option label="总经理" value="总经理" />
+          </el-select>
         </el-col>
       </el-form-item>
       <!--<el-form-item label="Instant delivery">-->
@@ -82,19 +91,19 @@ export default {
       form: {
         name: '',
         password: '',
+        school: '',
         sex: '',
+        position: '',
         department: '',
-        entryTime: null,
         remark: ''
       },
       formRules: {
         name: [{ required: true, trigger: 'blur', message: '姓名不能为空' }],
-        // idCard: [{ required: true, trigger: 'blur', validator: validateIdCard }],
+        school: [{ required: true, trigger: 'blur', message: '毕业院校不能为空' }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }],
         sex: [{ required: true, trigger: 'blur', message: '性别不能为空' }],
         department: [{ required: true, trigger: 'blur', message: '部门不能为空' }],
-        entryTime: [{ required: true, trigger: 'blur', message: '入职时间不能为空' }]
-
+        position: [{ required: true, trigger: 'blur', message: '职位不能为空' }]
       }
     }
   },

@@ -8,7 +8,7 @@
       label-position="left"
       :rules="loginRules"
     >
-      <h3 class="title">考勤在线管理系统</h3>
+      <h3 class="title">人事管理系统</h3>
       <el-form-item prop="username">
         <span class="svg-container">
           <svg-icon icon-class="user" />
@@ -54,10 +54,10 @@
           立即登录
         </el-button>
       </el-form-item>
-      <!--<div class="tips">-->
-      <!--<span style="margin-right:20px;">username: admin</span>-->
-      <!--<span> password: admin</span>-->
-      <!--</div>-->
+      <div class="tips">
+      <span style="margin-right:20px;">username: 100001/800001</span>
+      <span> password: 123456</span>
+      </div>
     </el-form>
   </div>
 </template>
@@ -85,7 +85,7 @@ export default {
     return {
       message: '',
       form: {
-        username: '100004',
+        username: '800001',
         password: '123456',
         role: ''
       },
