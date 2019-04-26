@@ -75,43 +75,43 @@ export const constantRouterMap = [
 // 异步挂载的路由
 // 动态需要根据权限加载的路由表
 export const asyncRouterMap = [
-  {
-    path: '/permission',
-    component: Layout,
-    name: 'Permission',
-    redirect: '/permission/admin',
-    alwaysShow: true,
-    meta: {
-      title: '权限测试页面',
-      icon: 'nested',
-      role: ['admin']
-    },
-    children: [
-      {
-        path: 'admin',
-        component: () => import('@/views/permission/RootPermission'),
-        name: 'AdminPage',
-        meta: {
-          role: ['admin', 'super_editor'],
-          title: '权限测试',
-          icon: 'checklist',
-          noCache: true
-          // 页面需要的权限
-        }
-      },
-      {
-        path: 'child',
-        component: () => import('@/views/permission/AdminPage'),
-        name: 'AdminPage',
-        meta: {
-          role: ['admin', 'super_editor'],
-          title: '子权限测试页',
-          icon: 'addteam',
-          noCache: true
-        } // 页面需要的权限
-      }
-    ]
-  },
+  // {
+  //   path: '/permission',
+  //   component: Layout,
+  //   name: 'Permission',
+  //   redirect: '/permission/admin',
+  //   alwaysShow: true,
+  //   meta: {
+  //     title: '权限测试页面',
+  //     icon: 'nested',
+  //     role: ['admin']
+  //   },
+  //   children: [
+  //     {
+  //       path: 'admin',
+  //       component: () => import('@/views/permission/RootPermission'),
+  //       name: 'AdminPage',
+  //       meta: {
+  //         role: ['admin', 'super_editor'],
+  //         title: '权限测试',
+  //         icon: 'checklist',
+  //         noCache: true
+  //         // 页面需要的权限
+  //       }
+  //     },
+  //     {
+  //       path: 'child',
+  //       component: () => import('@/views/permission/AdminPage'),
+  //       name: 'AdminPage',
+  //       meta: {
+  //         role: ['admin', 'super_editor'],
+  //         title: '子权限测试页',
+  //         icon: 'addteam',
+  //         noCache: true
+  //       } // 页面需要的权限
+  //     }
+  //   ]
+  // },
 
   {
     path: '/person',
@@ -148,7 +148,7 @@ export const asyncRouterMap = [
         path: 'edit',
         name: 'EditPerson',
         component: () => import('@/views/person/EditPerson'),
-        meta: { title: '查看编辑', icon: 'form', role: ['editor'] }
+        meta: { title: '信息编辑', icon: 'form', role: ['editor'] }
       }
     ]
   },

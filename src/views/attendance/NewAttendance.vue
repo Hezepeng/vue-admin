@@ -1,14 +1,19 @@
 <template>
   <div class="app-container">
     <el-form ref="form" :model="form" :rules="formRules" auto-complete="on" label-width="120px">
+      <el-form-item label="员工工号">
+        <el-col :span="10">
+          <el-input v-model="form.username" disabled />
+        </el-col>
+      </el-form-item>
       <el-form-item label="员工姓名" prop="name">
         <el-col :span="10">
-          <el-input v-model="form.name" />
+          <el-input v-model="form.name" disabled />
         </el-col>
       </el-form-item>
       <el-form-item label="员工性别" prop="sex">
         <el-col :span="10">
-          <el-radio-group v-model="form.sex">
+          <el-radio-group v-model="form.sex" disabled>
             <el-radio label="男" />
             <el-radio label="女" />
           </el-radio-group>
@@ -50,6 +55,7 @@
 <script>
 import { parseTime } from '@/utils'
 import { getPersonDetail } from '@/api/person'
+import { addAttendance } from '@/api/attendance'
 
 export default {
   name: 'NewAttendance',
@@ -58,6 +64,7 @@ export default {
     return {
       message: '',
       form: {
+        username: '',
         name: '',
         sex: '',
         department: '',
@@ -72,8 +79,11 @@ export default {
       }
     }
   },
-
-  computed: {},
+  computed: {
+    'username': function() {
+      return this.$store.getters.username
+    }
+  },
 
   watch: {},
 
@@ -82,28 +92,31 @@ export default {
   },
 
   mounted: function() {
-    getPersonDetail().then(response => {
+    getPersonDetail(this.username).then(response => {
       const person = response.data
       this.form.name = person.name
       this.form.sex = person.sex
       this.form.department = person.department
     })
+    this.form.username = this.username
   },
 
   methods: {
     onSubmit() {
       this.$refs.form.validate(valid => {
         if (valid) {
-          this.$message({
-            message: '打卡成功！',
-            type: 'success',
-            center: true,
-            duration: 3000
+          addAttendance(this.form).then(response => {
+            this.$message({
+              message: '打卡成功！',
+              type: 'success',
+              center: true,
+              duration: 3000
+            })
+            const _this = this
+            setTimeout(function() {
+              _this.$router.push('/attendance/my')
+            }, 1000)
           })
-          const _this = this
-          setTimeout(function() {
-            _this.$router.push('/attendance/my')
-          }, 1000)
         } else {
           console.log('输入数据不合法！')
           return false

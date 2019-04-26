@@ -2,17 +2,47 @@ import request from '@/utils/request'
 
 export function getAttendanceList() {
   return request({
-    url: '/getAttendanceList',
+    url: '/AttendanceApi/getAttendanceList',
     method: 'get'
   })
 }
 
-export function getMyAttendanceList(id) {
+export function getMyAttendanceList(username) {
   return request({
-    url: '/getMyAttendanceList',
+    url: '/AttendanceApi/getMyAttendanceList',
     method: 'get',
     params: {
-      id
+      username
+    }
+  })
+}
+
+export function addAttendance(form) {
+  return request({
+    url: '/AttendanceApi/addAttendance',
+    method: 'post',
+    data: {
+      form
+    }
+  })
+}
+
+export function deleteAttendance(form) {
+  return request({
+    url: '/AttendanceApi/deleteAttendance',
+    method: 'post',
+    data: {
+      form
+    }
+  })
+}
+
+export function updateAttendance(form) {
+  return request({
+    url: '/AttendanceApi/updateAttendance',
+    method: 'post',
+    data: {
+      form
     }
   })
 }

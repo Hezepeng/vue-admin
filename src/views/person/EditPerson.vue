@@ -3,7 +3,7 @@
     <el-form ref="form" :rules="formRules" :model="form" label-width="120px">
       <el-form-item label="工号">
         <el-col :span="10">
-          <el-input v-model="form.id" disabled />
+          <el-input v-model="form.username" disabled />
         </el-col>
       </el-form-item>
       <el-form-item label="姓名" prop="name">
@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { getPersonDetail } from '@/api/person'
+import { getPersonDetail, updatePerson } from '@/api/person'
 
 export default {
   name: 'EditPerson',
@@ -116,7 +116,6 @@ export default {
   },
   mounted: function() {
     getPersonDetail(this.username).then(response => {
-      console.log(this.username)
       this.form = response.data
     }).then(() => {
       this.infoChanged = false
@@ -128,17 +127,19 @@ export default {
     onSubmit() {
       this.$refs.form.validate(valid => {
         if (valid) {
-          this.$message({
-            message: '保存成功！',
-            type: 'success',
-            center: true,
-            duration: 4000
+          updatePerson(this.form).then(response => {
+            this.$message({
+              message: '保存成功！',
+              type: 'success',
+              center: true,
+              duration: 4000
+            })
+            this.infoChanged = false
+            const _this = this
+            setTimeout(function() {
+              _this.$router.push('/my')
+            }, 1000)
           })
-          this.infoChanged = false
-          const _this = this
-          setTimeout(function() {
-            _this.$router.push('/my')
-          }, 1000)
         } else {
           console.log('输入数据不合法！')
           return false

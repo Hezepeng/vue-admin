@@ -43,6 +43,7 @@
           <el-radio label="admin">我是管理员</el-radio>
         </el-radio-group>
       </div>
+
       <el-form-item>
         <el-button
           :loading="loading"
@@ -84,13 +85,13 @@ export default {
     return {
       message: '',
       form: {
-        username: 'admin',
+        username: '100004',
         password: '123456',
         role: ''
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        password: [{ required: true, trigger: 'blur', validator: validatePassword }],
       },
       loading: false,
       pwdType: 'password',
@@ -107,6 +108,14 @@ export default {
       }
     },
     handleLogin() {
+      if (this.form.role === '') {
+        this.$message({
+          type: 'error',
+          message: '请选择登录类型',
+          duration: 2000
+        })
+        return false
+      }
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
@@ -163,7 +172,7 @@ $light_gray: #eee;
     color: #454545;
   }
 
-  .el-radio{
+  .el-radio {
     color: #adafb3;
   }
 }

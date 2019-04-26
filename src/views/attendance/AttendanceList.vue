@@ -3,9 +3,9 @@
     <el-row>
       <el-col :span="24">
         <el-table
-          :data="tableData.filter(data => !search || data.id.toLowerCase().includes(search.toLowerCase())||
-            data.name.toLowerCase().includes(search.toLowerCase())||
-            data.department.toLowerCase().includes(search.toLowerCase()) ||
+          :data="tableData.filter(data => !search || data.Person.username.toString().toLowerCase().includes(search.toLowerCase())||
+            data.Person.name.toLowerCase().includes(search.toLowerCase())||
+            data.Person.department.toLowerCase().includes(search.toLowerCase()) ||
             data.type.toLowerCase().includes(search.toLowerCase()) ||
             data.time.toString().toLowerCase().includes(search.toLowerCase()) ||
             data.remark.toLowerCase().includes(search.toLowerCase()))"
@@ -15,16 +15,21 @@
         >
           <el-table-column
             prop="id"
+            label="No."
+            width="60"
+          />
+          <el-table-column
+            prop="Person.username"
             label="工号"
             width="180"
           />
           <el-table-column
-            prop="name"
+            prop="Person.name"
             label="姓名"
             width="180"
           />
           <el-table-column
-            prop="department"
+            prop="Person.department"
             label="部门"
             width="180"
             sortable
@@ -72,13 +77,13 @@
             <template slot-scope="scope">
               <el-button
                 size="mini"
-                @click="handleEdit(scope.$index, scope.row)"
+                @click="onEditRow(scope.$index, scope.row)"
               >编辑
               </el-button>
               <el-button
                 size="mini"
                 type="danger"
-                @click="handleDelete(scope.$index, scope.row)"
+                @click="onDeleteRow(scope.$index, scope.row)"
               >删除
               </el-button>
             </template>
@@ -86,11 +91,28 @@
         </el-table>
       </el-col>
     </el-row>
+    <div v-if="showDialog">
+      <el-dialog title="编辑信息" :visible.sync="showDialog">
+        <el-form :model="editRow" label-width="120px">
+          <el-form-item label="备注信息">
+            <el-col :span="16">
+              <el-input v-model="editRow.remark" type="textarea" rows="5" />
+            </el-col>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="showDialog = false">取 消</el-button>
+          <el-button type="primary" @click="onSaveEditRow()">保 存</el-button>
+        </div>
+      </el-dialog>
+    </div>
   </div>
 </template>
 
 <script>
 import { getAttendanceList } from '../../api/attendance'
+import { deleteAttendance, updateAttendance } from '@/api/attendance'
+import { deepCopy } from '@/utils'
 
 export default {
   name: 'AttendanceList',
@@ -98,7 +120,9 @@ export default {
   data() {
     return {
       tableData: [],
-      search: ''
+      search: '',
+      showDialog: false,
+      editRow: null
     }
   },
 
@@ -106,6 +130,9 @@ export default {
     const _this = this
     getAttendanceList().then(response => {
       _this.tableData = response.data
+      for (const item of _this.tableData) {
+        item.time = item.time.replace('T', '')
+      }
     })
   },
 
@@ -116,16 +143,42 @@ export default {
     filterDepartment(value, row) {
       return row.department === value
     },
-    handleEdit(index, row) {
-      // TODO 点编辑 弹出框可以修改部门和备注
-      // TODO 部门是select 备注是textarea  这两个直接复制PersonEdit页面的代码 点击保存的时候 把整个row的信息打印出来 并且更改回显到表格中
-      this.onRowUpdate(row)
+    onEditRow(index, row) {
+      this.editRow = deepCopy(row)
+      this.showDialog = true
     },
-    onRowUpdate(row) {
-      this.tableData.filter(function(item) {
-        return item.id === row.id
-      })[0] = row
-      console.log(row)
+    onSaveEditRow() {
+      const _this = this
+      const row = this.editRow
+      updateAttendance(this.editRow).then(response => {
+        console.log(this.editRow.username)
+        this.tableData.filter(function(item) {
+          if (item.id === row.id) {
+            item.remark = row.remark
+            _this.$message({
+              message: '保存成功！',
+              type: 'success',
+              center: true,
+              duration: 2000
+            })
+          }
+          return item.id === row.id
+        })
+      }).then(() => {
+        _this.editRow = null
+        _this.showDialog = false
+      })
+    },
+    onDeleteRow(index, row) {
+      deleteAttendance(row).then(response => {
+        this.tableData.splice(this.tableData.indexOf(row), 1)
+        this.$message({
+          message: '删除成功！',
+          type: 'success',
+          center: true,
+          duration: 2000
+        })
+      })
     }
   }
 }

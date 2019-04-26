@@ -21,16 +21,16 @@
       <el-form-item label="入职部门" prop="department">
         <el-col :span="10">
           <el-select v-model="form.department" placeholder="选择员工所属部分">
-            <el-option label="后勤" value="1" />
-            <el-option label="行政" value="2" />
-            <el-option label="财务" value="3" />
-            <el-option label="销售" value="4" />
+            <el-option label="后勤" value="后勤" />
+            <el-option label="行政" value="行政" />
+            <el-option label="财务" value="财务" />
+            <el-option label="销售" value="销售" />
           </el-select>
         </el-col>
       </el-form-item>
       <el-form-item label="入职时间" prop="entryTime">
         <el-col :span="10">
-          <el-date-picker v-model="form.entryTime" type="date" placeholder="选择员工开始入职时间" style="width: 100%;" />
+          <el-date-picker v-model="form.entryTime" type="date" placeholder="选择员工开始入职时间" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" style="width: 100%;" />
         </el-col>
       </el-form-item>
       <!--<el-form-item label="Instant delivery">-->
@@ -57,6 +57,8 @@
 </template>
 
 <script>
+import { addPerson } from '@/api/person';
+
 export default {
   name: 'NewPerson',
 
@@ -101,16 +103,18 @@ export default {
     onSubmit() {
       this.$refs.form.validate(valid => {
         if (valid) {
-          this.$message({
-            message: '添加人员成功！',
-            type: 'success',
-            center: true,
-            duration: 2000
+          addPerson(this.form).then(response => {
+            this.$message({
+              message: '添加人员成功！',
+              type: 'success',
+              center: true,
+              duration: 2000
+            })
+            const _this = this
+            setTimeout(function() {
+              _this.$router.push('/person/list')
+            }, 1000)
           })
-          const _this = this
-          setTimeout(function() {
-            _this.$router.push('/person/list')
-          }, 1000)
         } else {
           console.log('输入数据不合法！')
           return false

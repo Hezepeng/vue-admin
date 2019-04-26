@@ -15,7 +15,7 @@
           style="width: 100%"
         >
           <el-table-column
-            prop="id"
+            prop="username"
             label="工号"
             width="100"
           />
@@ -89,13 +89,13 @@
             <template slot-scope="scope">
               <el-button
                 size="mini"
-                @click="handleEdit(scope.$index, scope.row)"
+                @click="onEditRow(scope.$index, scope.row)"
               >编辑
               </el-button>
               <el-button
                 size="mini"
                 type="danger"
-                @click="handleDelete(scope.$index, scope.row)"
+                @click="onDeleteRow(scope.$index, scope.row)"
               >删除
               </el-button>
             </template>
@@ -103,20 +103,48 @@
         </el-table>
       </el-col>
     </el-row>
-
+    <div v-if="showDialog">
+      <el-dialog title="编辑信息" :visible.sync="showDialog">
+        <el-form :model="editRow" label-width="120px">
+          <el-form-item label="部门" prop="department">
+            <el-col :span="16">
+              <el-select v-model="editRow.department" placeholder="选择员工所属部分">
+                <el-option label="后勤" value="后勤" />
+                <el-option label="行政" value="行政" />
+                <el-option label="财务" value="财务" />
+                <el-option label="销售" value="销售" />
+              </el-select>
+            </el-col>
+          </el-form-item>
+          <el-form-item label="备注信息">
+            <el-col :span="16">
+              <el-input v-model="editRow.remark" type="textarea" rows="5" />
+            </el-col>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="showDialog = false">取 消</el-button>
+          <el-button type="primary" @click="onSaveEditRow()">保 存</el-button>
+        </div>
+      </el-dialog>
+    </div>
   </div>
 </template>
 
 <script>
 import { getPersonList } from '../../api/person'
+import { deepCopy } from '@/utils'
+import { deletePerson, updatePerson } from '@/api/person'
 
 export default {
   name: 'PersonList',
 
-  data() {
+  data () {
     return {
       tableData: [],
-      search: ''
+      search: '',
+      editRow: null,
+      showDialog: false
     }
   },
 
@@ -136,22 +164,49 @@ export default {
   },
 
   methods: {
-    filterState(value, row) {
+    filterState (value, row) {
       return row.state === value
     },
-    filterDepartment(value, row) {
+    filterDepartment (value, row) {
       return row.department === value
     },
-    handleEdit(index, row) {
-      // TODO 点编辑 弹出框可以修改部门和备注
-      // TODO 部门是select 备注是textarea  这两个直接复制PersonEdit页面的代码 点击保存的时候 把整个row的信息打印出来 并且更改回显到表格中
-      this.onRowUpdate(row)
+    onEditRow (index, row) {
+      this.editRow = deepCopy(row)
+      this.showDialog = true
     },
-    onRowUpdate(row) {
-      this.tableData.filter(function(item) {
-        return item.id === row.id
-      })[0] = row
-      console.log(row)
+    onSaveEditRow () {
+      const _this = this
+      const row = this.editRow
+      updatePerson(this.editRow).then(response => {
+        console.log(this.editRow.username)
+        this.tableData.filter(function(item) {
+          if (item.username === row.username) {
+            item.department = row.department
+            item.remark = row.remark
+            _this.$message({
+              message: '保存成功！',
+              type: 'success',
+              center: true,
+              duration: 2000
+            })
+          }
+          return item.username === row.username
+        })
+      }).then(() => {
+        _this.editRow = null
+        _this.showDialog = false
+      })
+    },
+    onDeleteRow (index, row) {
+      deletePerson(row).then(response => {
+        this.tableData.splice(this.tableData.indexOf(row), 1)
+        this.$message({
+          message: '删除成功！',
+          type: 'success',
+          center: true,
+          duration: 2000
+        })
+      })
     }
   }
 }

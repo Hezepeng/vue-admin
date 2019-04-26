@@ -1,19 +1,20 @@
 import request from '@/utils/request'
 
-export function login(username, password) {
+export function login(username, password,role) {
   return request({
-    url: '/login',
+    url: '/LoginApi/login',
     method: 'post',
     data: {
       username,
-      password
+      password,
+      role
     }
   })
 }
 
 export function getUserInfo(token) {
   return request({
-    url: '/getUserInfo',
+    url: '/LoginApi/getUserInfo',
     method: 'get',
     params: { token }
   })
@@ -21,9 +22,9 @@ export function getUserInfo(token) {
 
 export function logout(token) {
   return request({
-    url: '/logout',
-    method: 'post',
-    data: {
+    url: '/LoginApi/logout',
+    method: 'get',
+    params: {
       token
     }
   })
