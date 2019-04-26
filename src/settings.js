@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: '考勤管理系统',
+  title: '在线考勤管理系统',
 
   /**
    * @type {boolean} true | false
