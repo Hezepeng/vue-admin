@@ -42,3 +42,10 @@
     display: block
   }
 }
+
+.el-input.is-disabled .el-input__inner {
+  background-color: #f8f8f9;
+  border-color: #E4E7ED;
+  color: #5f6266;
+  cursor: not-allowed;
+}

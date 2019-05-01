@@ -70,6 +70,7 @@
             <template slot-scope="scope">
               <el-button
                 size="mini"
+                type="primary"
                 @click="onEditRow(scope.$index, scope.row)"
               >编辑
               </el-button>
@@ -104,7 +105,7 @@
 
 <script>
 import { deleteAttendance, getMyAttendanceList, updateAttendance } from '@/api/attendance'
-import { deepCopy } from '@/utils'
+import { deepCopy, parseTime } from '@/utils'
 
 export default {
   name: 'MyHistoryAttendance',
@@ -126,8 +127,8 @@ export default {
     const _this = this
     getMyAttendanceList(this.username).then(response => {
       _this.tableData = response.data
-      for (const item of _this.tableData) {
-        item.time = item.time.replace('T', '')
+      for (const i in _this.tableData) {
+        _this.tableData[i].time = parseTime( _this.tableData[i].time)
       }
     })
   },

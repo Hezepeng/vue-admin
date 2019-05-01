@@ -2,14 +2,14 @@ import request from '@/utils/request'
 
 export function getVacationList() {
   return request({
-    url: '/AttendanceApi/getVacationList',
+    url: '/VacationApi/getVacationList',
     method: 'get'
   })
 }
 
 export function getMyVacationList(username) {
   return request({
-    url: '/AttendanceApi/getMyVacationList',
+    url: '/VacationApi/getMyVacationList',
     method: 'get',
     params: {
       username
@@ -19,7 +19,7 @@ export function getMyVacationList(username) {
 
 export function addVacation(form) {
   return request({
-    url: '/AttendanceApi/addVacation',
+    url: '/VacationApi/addVacation',
     method: 'post',
     data: {
       form
@@ -29,7 +29,7 @@ export function addVacation(form) {
 
 export function deleteVacation(form) {
   return request({
-    url: '/AttendanceApi/deleteVacation',
+    url: '/VacationApi/deleteVacation',
     method: 'post',
     data: {
       form
@@ -39,7 +39,7 @@ export function deleteVacation(form) {
 
 export function updateVacation(form) {
   return request({
-    url: '/AttendanceApi/updateVacation',
+    url: '/VacationApi/updateVacation',
     method: 'post',
     data: {
       form

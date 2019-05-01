@@ -55,8 +55,8 @@
         </el-button>
       </el-form-item>
       <div class="tips">
-      <span style="margin-right:20px;">username: 100001/800001</span>
-      <span> password: 123456</span>
+        <span style="margin-right:20px;">username: 100001/800001</span>
+        <span> password: 123456</span>
       </div>
     </el-form>
   </div>
@@ -91,7 +91,7 @@ export default {
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }],
+        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       loading: false,
       pwdType: 'password',

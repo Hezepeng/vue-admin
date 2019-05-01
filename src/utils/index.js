@@ -5,7 +5,7 @@
  * @returns {string}
  */
 export function parseTime(time, cFormat) {
-  if (arguments.length === 0) {
+  if (arguments.length === 0 || time === null) {
     return null
   }
   const format = cFormat || '{y}-{m}-{d} {h}:{i}:{s}'
@@ -106,7 +106,7 @@ export function param2Obj(url) {
 }
 
 export function deepCopy(obj) {
-  const result = Array.isArray(obj) ? [] : {};
+  const result = Array.isArray(obj) ? [] : {}
   for (const key in obj) {
     if (obj.hasOwnProperty(key)) {
       if (typeof obj[key] === 'object') {

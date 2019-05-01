@@ -81,7 +81,7 @@ export const asyncRouterMap = [
     redirect: '/person/list',
     name: 'Person',
     alwaysShow: true,
-    meta: { title: '员工管理', icon: 'example', role: ['admin'] },
+    meta: { title: '员工管理', icon: 'user', role: ['admin'] },
     children: [
       {
         path: 'add',
@@ -104,7 +104,7 @@ export const asyncRouterMap = [
     redirect: '/my/edit',
     name: 'My',
     alwaysShow: true,
-    meta: { title: '个人信息', icon: 'example', role: ['editor'] },
+    meta: { title: '个人信息', icon: 'user', role: ['editor'] },
     children: [
       {
         path: 'edit',
@@ -118,7 +118,6 @@ export const asyncRouterMap = [
   {
     path: '/attendance',
     component: Layout,
-    redirect: '/attendance/list',
     alwaysShow: true,
     name: 'Attendance',
     meta: { title: '考勤管理', icon: 'tree', role: ['editor', 'admin'] },
@@ -147,10 +146,9 @@ export const asyncRouterMap = [
   {
     path: '/vacation',
     component: Layout,
-    redirect: '/vacation/list',
     alwaysShow: true,
     name: 'Vacation',
-    meta: { title: '请假管理', icon: 'tree', role: ['editor', 'admin'] },
+    meta: { title: '请假管理', icon: 'link', role: ['editor', 'admin'] },
     children: [
       {
         path: 'add',
@@ -169,6 +167,77 @@ export const asyncRouterMap = [
         name: 'MyHistoryVacation',
         component: () => import('@/views/vacation/MyHistoryVacation'),
         meta: { title: '请假历史', icon: 'table', role: ['editor'] }
+      }
+    ]
+  },
+
+  {
+    path: '/performance',
+    component: Layout,
+    alwaysShow: true,
+    name: 'Performance',
+    meta: { title: '绩效管理', icon: 'nested', role: ['editor', 'admin'] },
+    children: [
+      {
+        path: 'add/:id',
+        name: 'NewPerformance',
+        hidden: true,
+        component: () => import('@/views/performance/NewPerformance'),
+        meta: { title: '设置员工业绩', icon: 'form', role: ['admin'] }
+      },
+      {
+        path: 'person/list',
+        name: 'SetPerformance',
+        component: () => import('@/views/performance/PersonList'),
+        meta: { title: '设置员工业绩', icon: 'form', role: ['admin'] }
+      },
+      ,
+      {
+        path: 'my',
+        name: 'MyHistoryPerformance',
+        component: () => import('@/views/performance/MyHistoryPerformance'),
+        meta: { title: '我的业绩', icon: 'form', role: ['editor'] }
+      },
+      {
+        path: 'list',
+        name: 'PerformanceList',
+        component: () => import('@/views/performance/PerformanceList'),
+        meta: { title: '员工业绩列表', icon: 'table', role: ['admin'] }
+      },
+    ]
+  },
+
+  {
+    path: '/salary',
+    component: Layout,
+    alwaysShow: true,
+    name: 'Salary',
+    meta: { title: '薪酬管理', icon: 'example', role: ['editor', 'admin'] },
+    children: [
+      {
+        path: 'add/:id',
+        name: 'NewSalary',
+        hidden: true,
+        component: () => import('@/views/salary/NewSalary'),
+        meta: { title: '发放工资', icon: 'form', role: ['admin'] }
+      },
+      {
+        path: 'performance/list',
+        name: 'SetSalary',
+        component: () => import('@/views/performance/PerformanceList'),
+        meta: { title: '选择发放人员', icon: 'table', role: ['admin'] }
+      },
+      {
+        path: 'list',
+        name: 'SalaryList',
+        component: () => import('@/views/salary/SalaryList'),
+        meta: { title: '员工工资列表', icon: 'table', role: ['admin'] }
+      },
+      {
+        path: 'my',
+        name: 'MyHistorySalary',
+        component: () => import('@/views/salary/MyHistorySalary'),
+        meta: { title: '我的工资', icon: 'table', role: ['editor'] }
       }
     ]
   },

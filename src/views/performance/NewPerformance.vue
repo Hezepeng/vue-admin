@@ -11,14 +11,6 @@
           <el-input v-model="form.name" disabled />
         </el-col>
       </el-form-item>
-      <el-form-item label="员工性别" prop="sex">
-        <el-col :span="10">
-          <el-radio-group v-model="form.sex" disabled>
-            <el-radio label="男" />
-            <el-radio label="女" />
-          </el-radio-group>
-        </el-col>
-      </el-form-item>
       <el-form-item label="部门" prop="department">
         <el-col :span="10">
           <el-select v-model="form.department" placeholder="选择员工所属部分" disabled>
@@ -39,24 +31,23 @@
           </el-select>
         </el-col>
       </el-form-item>
-      <el-form-item label="打卡时间" prop="time">
-        <el-col :span="10">
-          <el-input v-model="form.time" placeholder="打卡时间" disabled />
+      <el-form-item label="任务年月">
+        <el-col :span="3">
+          <el-input v-model="form.year" disabled />
         </el-col>
+        <el-col style="text-align: center;" :span="1">年</el-col>
+        <el-col :span="3">
+          <el-input v-model="form.month" disabled />
+        </el-col>
+        <el-col style="text-align: center;" :span="1">月</el-col>
       </el-form-item>
-      <el-form-item label="打卡类型" prop="type">
-        <el-radio-group v-model="form.type">
-          <el-radio label="上班">上班打卡</el-radio>
-          <el-radio label="下班">下班打卡</el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="备注信息">
+      <el-form-item label="任务量">
         <el-col :span="10">
-          <el-input v-model="form.remark" type="textarea" rows="6" />
+          <el-input-number v-model="form.targetTask" :min="1" :step="1" label="设置该月的任务量" />
         </el-col>
       </el-form-item>
       <el-form-item>
-        <el-button icon="el-icon-edit" type="success" round @click="onSubmit">立即打卡</el-button>
+        <el-button icon="el-icon-edit" type="success" round @click="onSubmit">创建业绩目标</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -65,10 +56,10 @@
 <script>
 import { parseTime } from '@/utils'
 import { getPersonDetail } from '@/api/person'
-import { addAttendance } from '@/api/attendance'
+import { addPerformance } from '@/api/performance'
 
 export default {
-  name: 'NewAttendance',
+  name: 'NewPerformance',
 
   data() {
     return {
@@ -76,57 +67,45 @@ export default {
       form: {
         username: '',
         name: '',
-        sex: '',
         department: '',
         position: '',
         time: parseTime(new Date(), ''),
-        type: '',
+        year: new Date().getFullYear(),
+        month: new Date().getMonth() + 1,
+        targetTask: '',
         remark: ''
       },
       formRules: {
-        name: [{ required: true, trigger: 'blur', message: '姓名不能为空' }],
-        sex: [{ required: true, trigger: 'blur', message: '性别不能为空' }],
-        type: [{ required: true, trigger: 'blur', message: '打卡类型不能为空' }]
+        targetTask: [{ required: true, trigger: 'blur', message: '任务量不能为空' }]
       }
     }
   },
-  computed: {
-    'username': function() {
-      return this.$store.getters.username
-    }
-  },
-
-  watch: {},
-
-  created: function() {
-
-  },
 
   mounted: function() {
-    getPersonDetail(this.username).then(response => {
+    const username = this.$route.params['id']
+    getPersonDetail(username).then(response => {
       const person = response.data
       this.form.name = person.name
-      this.form.sex = person.sex
+      this.form.username = person.username
       this.form.department = person.department
       this.form.position = person.position
     })
-    this.form.username = this.username
   },
 
   methods: {
     onSubmit() {
       this.$refs.form.validate(valid => {
         if (valid) {
-          addAttendance(this.form).then(response => {
+          addPerformance(this.form).then(response => {
             this.$message({
-              message: '打卡成功！',
+              message: '添加成功！',
               type: 'success',
               center: true,
               duration: 3000
             })
             const _this = this
             setTimeout(function() {
-              _this.$router.push('/attendance/my')
+              _this.$router.push('/performance/list')
             }, 1000)
           })
         } else {

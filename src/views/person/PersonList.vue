@@ -59,11 +59,6 @@
             :filter-method="filterPosition"
             filter-placement="bottom-end"
           />
-          <el-table-column
-            prop="remark"
-            label="备注信息"
-            width="100"
-          />
           <el-table-column align="center" width="240">
             <template slot="header" slot-scope="scope">
               <el-input
@@ -75,6 +70,7 @@
             <template slot-scope="scope">
               <el-button
                 size="mini"
+                type="primary"
                 @click="onEditRow(scope.$index, scope.row)"
               >编辑
               </el-button>
@@ -91,9 +87,9 @@
     </el-row>
     <div v-if="showDialog">
       <el-dialog title="编辑信息" :visible.sync="showDialog">
-        <el-form :model="editRow" label-width="120px">
+        <el-form :model="editRow" label-width="80px">
           <el-form-item label="部门" prop="department">
-            <el-col :span="16">
+            <el-col :span="12">
               <el-select v-model="editRow.department" placeholder="选择员工所属部分">
                 <el-option label="后勤" value="后勤" />
                 <el-option label="行政" value="行政" />
@@ -101,18 +97,15 @@
                 <el-option label="销售" value="销售" />
               </el-select>
             </el-col>
-            <el-col :span="16">
+          </el-form-item>
+          <el-form-item label="部门" prop="department">
+            <el-col :span="12">
               <el-select v-model="editRow.position" placeholder="选择员工的职位">
                 <el-option label="员工" value="员工" />
                 <el-option label="组长" value="组长" />
                 <el-option label="主管" value="主管" />
                 <el-option label="总经理" value="总经理" />
               </el-select>
-            </el-col>
-          </el-form-item>
-          <el-form-item label="备注信息">
-            <el-col :span="16">
-              <el-input v-model="editRow.remark" type="textarea" rows="5" />
             </el-col>
           </el-form-item>
         </el-form>
@@ -176,7 +169,7 @@ export default {
         this.tableData.filter(function(item) {
           if (item.username === row.username) {
             item.department = row.department
-            item.remark = row.remark
+            item.position = row.position
             _this.$message({
               message: '保存成功！',
               type: 'success',

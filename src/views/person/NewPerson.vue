@@ -53,11 +53,11 @@
       <!--<el-checkbox label="Simple brand exposure" name="type" />-->
       <!--</el-checkbox-group>-->
       <!--</el-form-item>-->
-      <el-form-item label="备注信息">
-        <el-col :span="10">
-          <el-input v-model="form.remark" type="textarea" rows="6" />
-        </el-col>
-      </el-form-item>
+      <!--<el-form-item label="备注信息">-->
+        <!--<el-col :span="10">-->
+          <!--<el-input v-model="form.remark" type="textarea" rows="6" />-->
+        <!--</el-col>-->
+      <!--</el-form-item>-->
       <el-form-item>
         <el-button type="primary" @click="onSubmit">提交员工信息</el-button>
       </el-form-item>
