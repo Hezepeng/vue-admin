@@ -54,10 +54,10 @@
           立即登录
         </el-button>
       </el-form-item>
-      <!--<div class="tips">-->
-      <!--<span style="margin-right:20px;">username: admin</span>-->
-      <!--<span> password: admin</span>-->
-      <!--</div>-->
+      <div class="tips">
+      <span style="margin-right:20px;">管理员用户名: 100004</span>
+      <span> 密码: 123456</span>
+      </div>
     </el-form>
   </div>
 </template>
