@@ -14,10 +14,10 @@
       <el-form-item label="部门" prop="department">
         <el-col :span="10">
           <el-select v-model="form.department" placeholder="选择员工所属部分" disabled>
-            <el-option label="后勤" value="后勤" />
+            <el-option label="人事" value="人事" />
             <el-option label="行政" value="行政" />
             <el-option label="财务" value="财务" />
-            <el-option label="销售" value="销售" />
+            <el-option label="业务" value="业务" />
           </el-select>
         </el-col>
       </el-form-item>

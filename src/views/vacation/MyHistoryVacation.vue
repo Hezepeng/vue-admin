@@ -28,7 +28,7 @@
           <!--label="部门"-->
           <!--width="180"-->
           <!--sortable-->
-          <!--:filters="[{ text: '行政', value: '行政' }, { text: '后勤', value: '后勤' }, { text: '财务', value: '财务' }, { text: '销售', value: '销售' }]"-->
+          <!--:filters="[{ text: '行政', value: '行政' }, { text: '人事', value: '人事' }, { text: '财务', value: '财务' }, { text: '业务', value: '业务' }]"-->
           <!--:filter-method="filterDepartment"-->
           <!--filter-placement="bottom-end"-->
           <!--/>-->

@@ -4,9 +4,12 @@
       <el-col :span="24">
         <el-table
           :data="tableData.filter(data => !search || data.username.toString().toLowerCase().includes(search.toLowerCase())||
+            data.Person.name.toLowerCase().includes(search.toLowerCase()) ||
+            data.Person.school.toLowerCase().includes(search.toLowerCase()) ||
             data.state.toLowerCase().includes(search.toLowerCase()) ||
             data.days.toString().toLowerCase().includes(search.toLowerCase()) ||
             data.createTime.toLowerCase().includes(search.toLowerCase()) ||
+            data.reason.toLowerCase().includes(search.toLowerCase()) ||
             data.replyContent.toLowerCase().includes(search.toLowerCase()))"
           height="600"
           border
@@ -75,13 +78,14 @@
             <template slot-scope="scope">
               <el-button
                 size="mini"
-                type="success"
+                type="text"
+                :disabled="scope.row.state==='已通过'"
                 @click="onPass(scope.$index, scope.row)"
               >通过
               </el-button>
               <el-button
                 size="mini"
-                type="danger"
+                type="text"
                 @click="onReject(scope.$index, scope.row)"
               >拒绝
               </el-button>
@@ -115,7 +119,7 @@ import { deepCopy, parseTime } from '@/utils'
 export default {
   name: 'VacationList',
 
-  data () {
+  data() {
     return {
       tableData: [],
       search: '',
@@ -140,10 +144,10 @@ export default {
   },
 
   methods: {
-    filterState (value, row) {
+    filterState(value, row) {
       return row.state === value
     },
-    onPass (index, row) {
+    onPass(index, row) {
       this.editRow = deepCopy(row)
       console.log(this.editRow)
       console.log(row)
@@ -151,13 +155,13 @@ export default {
       this.replyTitle = '通过申请，请写下回复内容'
       this.showDialog = true
     },
-    onReject (index, row) {
+    onReject(index, row) {
       this.editRow = deepCopy(row)
       this.buttonContent = '确认拒绝'
       this.replyTitle = '拒绝申请，请写下回复内容'
       this.showDialog = true
     },
-    onIfPass () {
+    onIfPass() {
       if (this.buttonContent === '确认通过') {
         this.editRow.state = '已通过'
       } else {

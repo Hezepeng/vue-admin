@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: '人事管理系统',
+  title: '外贸公司人事管理系统',
 
   /**
    * @type {boolean} true | false

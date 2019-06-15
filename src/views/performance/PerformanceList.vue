@@ -9,7 +9,7 @@
             data.Person.position.toLowerCase().includes(search.toLowerCase()) ||
             data.time.toString().toLowerCase().includes(search.toLowerCase()) ||
             data.completeTask.toString().toLowerCase().includes(search.toLowerCase()) ||
-            data.targetTask.toLowerCase().includes(search.toLowerCase()))"
+            data.targetTask.toString().toLowerCase().includes(search.toLowerCase()))"
           height="600"
           border
           style="width: 100%"
@@ -34,7 +34,7 @@
             label="部门"
             width="100"
             sortable
-            :filters="[{ text: '行政', value: '行政' }, { text: '后勤', value: '后勤' }, { text: '财务', value: '财务' }, { text: '销售', value: '销售' }]"
+            :filters="[{ text: '行政', value: '行政' }, { text: '人事', value: '人事' }, { text: '财务', value: '财务' }, { text: '业务', value: '业务' }]"
             :filter-method="filterDepartment"
             filter-placement="bottom-end"
           />
@@ -113,9 +113,9 @@
                 :disabled="scope.row.isEnd"
               >编辑
               </el-button>
-              <el-button
+<el-button
                 size="mini"
-                type="danger"
+                type="text"
                 @click="onDeleteRow(scope.$index, scope.row)"
               >删除
               </el-button>

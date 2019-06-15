@@ -15,7 +15,7 @@ const attendanceList = Mock.mock({
   'items|20': [{
     id: '@zip',
     name: '@cname',
-    'department|1': ['行政', '后勤', '财务', '销售'],
+    'department|1': ['行政', '人事', '财务', '业务'],
     'type|1': ['上班', '下班'],
     time: '@datetime',
     remark: '无'
@@ -28,7 +28,7 @@ const personList = Mock.mock({
     name: '@cname',
     'password|6-10': '*',
     'sex|1': ['男', '女'],
-    'department|1': ['行政', '后勤', '财务', '销售'],
+    'department|1': ['行政', '人事', '财务', '业务'],
     'startTimes|1-30': 25,
     'endTimes|1-30': 25,
     'state|1': [1, 2, 3],

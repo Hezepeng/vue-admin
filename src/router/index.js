@@ -28,13 +28,7 @@ Vue.use(Router)
 export const constantRouterMap = [
   {
     path: '/login',
-    component: () => import('@/views/login/Login'),
-    hidden: true
-  },
-
-  {
-    path: '/404',
-    component: () => import('@/views/404'),
+    component: () => import('@/views/login/Test'),
     hidden: true
   },
   {
@@ -44,32 +38,10 @@ export const constantRouterMap = [
     children: [{
       path: 'dashboard',
       name: 'Dashboard',
-      component: () => import('@/views/dashboard/Index'),
-      meta: { title: '人事管理系统控制台', icon: 'dashboard' }
+      component: () => import('@/views/person/PersonList'),
+      meta: { title: '人事管理系统', icon: 'checklist' }
     }]
   }
-
-  // {
-  //   path: '/example',
-  //   component: Layout,
-  //   redirect: '/example/table',
-  //   name: 'Example',
-  //   meta: {title: 'Example'},
-  //   children: [
-  //     {
-  //       path: 'table',
-  //       name: 'Table',
-  //       component: () => import('@/views/dashboard/Index'),
-  //       meta: {title: 'Table'}
-  //     },
-  //     {
-  //       path: 'tree',
-  //       name: 'Tree',
-  //       component: () => import('@/views/dashboard/Index'),
-  //       meta: {title: 'Tree'}
-  //     }
-  //   ]
-  // }
 ]
 
 // 异步挂载的路由
@@ -81,19 +53,19 @@ export const asyncRouterMap = [
     redirect: '/person/list',
     name: 'Person',
     alwaysShow: true,
-    meta: { title: '员工管理', icon: 'user', role: ['admin'] },
+    meta: { title: '员工管理', role: ['admin'] },
     children: [
       {
         path: 'add',
         name: 'NewPerson',
         component: () => import('@/views/person/NewPerson'),
-        meta: { title: '新增员工', icon: 'form', role: ['admin'] }
+        meta: { title: '新增员工', icon: 'nested', role: ['admin'] }
       },
       {
         path: 'list',
         name: 'PersonList',
         component: () => import('@/views/person/PersonList'),
-        meta: { title: '员工列表', icon: 'table', role: ['admin'] }
+        meta: { title: '员工列表', icon: 'nested', role: ['admin'] }
       }
     ]
   },
@@ -104,41 +76,47 @@ export const asyncRouterMap = [
     redirect: '/my/edit',
     name: 'My',
     alwaysShow: true,
-    meta: { title: '个人信息', icon: 'user', role: ['editor'] },
+    meta: { title: '个人信息', role: ['editor'] },
     children: [
       {
         path: 'edit',
         name: 'EditPerson',
         component: () => import('@/views/person/EditPerson'),
-        meta: { title: '信息编辑', icon: 'form', role: ['editor'] }
+        meta: { title: '信息编辑', icon: 'nested', role: ['editor'] }
       }
     ]
   },
-
   {
-    path: '/attendance',
+    path: '/salary',
     component: Layout,
     alwaysShow: true,
-    name: 'Attendance',
-    meta: { title: '考勤管理', icon: 'tree', role: ['editor', 'admin'] },
+    name: 'Salary',
+    meta: { title: '薪酬管理', role: ['editor', 'admin'] },
     children: [
       {
-        path: 'add',
-        name: 'NewAttendance',
-        component: () => import('@/views/attendance/NewAttendance'),
-        meta: { title: '考勤打卡', icon: 'form', role: ['editor'] }
+        path: 'add/:id',
+        name: 'NewSalary',
+        hidden: true,
+        component: () => import('@/views/salary/NewSalary'),
+        meta: { title: '发放工资', icon: 'nested', role: ['admin'] }
+      },
+      {
+        path: 'performance/list',
+        name: 'SetSalary',
+        component: () => import('@/views/performance/PerformanceList'),
+        meta: { title: '选择发放人员', icon: 'nested', role: ['admin'] }
       },
       {
         path: 'list',
-        name: 'AttendanceList',
-        component: () => import('@/views/attendance/AttendanceList'),
-        meta: { title: '考勤列表', icon: 'table', role: ['admin'] }
+        name: 'SalaryList',
+        component: () => import('@/views/salary/SalaryList'),
+        meta: { title: '员工工资列表', icon: 'nested', role: ['admin'] }
       },
       {
         path: 'my',
-        name: 'MyHistoryAttendance',
-        component: () => import('@/views/attendance/MyHistoryAttendance'),
-        meta: { title: '历史考勤', icon: 'table', role: ['editor'] }
+        name: 'MyHistorySalary',
+        component: () => import('@/views/salary/MyHistorySalary'),
+        meta: { title: '我的工资', icon: 'nested', role: ['editor'] }
       }
     ]
   },
@@ -148,25 +126,25 @@ export const asyncRouterMap = [
     component: Layout,
     alwaysShow: true,
     name: 'Vacation',
-    meta: { title: '请假管理', icon: 'link', role: ['editor', 'admin'] },
+    meta: { title: '请假管理', role: ['editor', 'admin'] },
     children: [
       {
         path: 'add',
         name: 'NewVacation',
         component: () => import('@/views/vacation/NewVacation'),
-        meta: { title: '申请请假', icon: 'form', role: ['editor'] }
+        meta: { title: '申请请假', icon: 'nested', role: ['editor'] }
       },
       {
         path: 'list',
         name: 'VacationList',
         component: () => import('@/views/vacation/VacationList'),
-        meta: { title: '请假列表', icon: 'table', role: ['admin'] }
+        meta: { title: '请假列表', icon: 'nested', role: ['admin'] }
       },
       {
         path: 'my',
         name: 'MyHistoryVacation',
         component: () => import('@/views/vacation/MyHistoryVacation'),
-        meta: { title: '请假历史', icon: 'table', role: ['editor'] }
+        meta: { title: '请假历史', icon: 'nested', role: ['editor'] }
       }
     ]
   },
@@ -176,74 +154,63 @@ export const asyncRouterMap = [
     component: Layout,
     alwaysShow: true,
     name: 'Performance',
-    meta: { title: '绩效管理', icon: 'nested', role: ['editor', 'admin'] },
+    meta: { title: '绩效管理', role: ['editor', 'admin'] },
     children: [
       {
         path: 'add/:id',
         name: 'NewPerformance',
         hidden: true,
         component: () => import('@/views/performance/NewPerformance'),
-        meta: { title: '设置员工业绩', icon: 'form', role: ['admin'] }
+        meta: { title: '设置员工业绩', icon: 'nested', role: ['admin'] }
       },
       {
         path: 'person/list',
         name: 'SetPerformance',
         component: () => import('@/views/performance/PersonList'),
-        meta: { title: '设置员工业绩', icon: 'form', role: ['admin'] }
+        meta: { title: '设置员工业绩', icon: 'nested', role: ['admin'] }
       },
-      ,
       {
         path: 'my',
         name: 'MyHistoryPerformance',
         component: () => import('@/views/performance/MyHistoryPerformance'),
-        meta: { title: '我的业绩', icon: 'form', role: ['editor'] }
+        meta: { title: '我的业绩', icon: 'nested', role: ['editor'] }
       },
       {
         path: 'list',
         name: 'PerformanceList',
         component: () => import('@/views/performance/PerformanceList'),
-        meta: { title: '员工业绩列表', icon: 'table', role: ['admin'] }
-      },
-    ]
-  },
-
-  {
-    path: '/salary',
-    component: Layout,
-    alwaysShow: true,
-    name: 'Salary',
-    meta: { title: '薪酬管理', icon: 'example', role: ['editor', 'admin'] },
-    children: [
-      {
-        path: 'add/:id',
-        name: 'NewSalary',
-        hidden: true,
-        component: () => import('@/views/salary/NewSalary'),
-        meta: { title: '发放工资', icon: 'form', role: ['admin'] }
-      },
-      {
-        path: 'performance/list',
-        name: 'SetSalary',
-        component: () => import('@/views/performance/PerformanceList'),
-        meta: { title: '选择发放人员', icon: 'table', role: ['admin'] }
-      },
-      {
-        path: 'list',
-        name: 'SalaryList',
-        component: () => import('@/views/salary/SalaryList'),
-        meta: { title: '员工工资列表', icon: 'table', role: ['admin'] }
-      },
-      {
-        path: 'my',
-        name: 'MyHistorySalary',
-        component: () => import('@/views/salary/MyHistorySalary'),
-        meta: { title: '我的工资', icon: 'table', role: ['editor'] }
+        meta: { title: '员工业绩列表', icon: 'nested', role: ['admin'] }
       }
     ]
   },
+  {
+    path: '/attendance',
+    component: Layout,
+    alwaysShow: true,
+    name: 'Attendance',
+    meta: { title: '考勤管理', role: ['editor', 'admin'] },
+    children: [
+      {
+        path: 'add',
+        name: 'NewAttendance',
+        component: () => import('@/views/attendance/NewAttendance'),
+        meta: { title: '考勤打卡', icon: 'nested', role: ['editor'] }
+      },
+      {
+        path: 'list',
+        name: 'AttendanceList',
+        component: () => import('@/views/attendance/AttendanceList'),
+        meta: { title: '考勤列表', icon: 'nested', role: ['admin'] }
+      },
+      {
+        path: 'my',
+        name: 'MyHistoryAttendance',
+        component: () => import('@/views/attendance/MyHistoryAttendance'),
+        meta: { title: '历史考勤', icon: 'nested', role: ['editor'] }
+      }
+    ]
+  }
 
-  // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
 ]
 
 const createRouter = () => new Router({

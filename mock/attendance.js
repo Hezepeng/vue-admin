@@ -4,7 +4,7 @@ const attendanceList = Mock.mock({
   'items|20': [{
     id: '@zip',
     name: '@cname',
-    'department|1': ['行政', '后勤', '财务', '销售'],
+    'department|1': ['行政', '人事', '财务', '业务'],
     'type|1': ['上班', '下班'],
     time: '@datetime',
     remark: '无'
@@ -15,7 +15,7 @@ const myAttendanceList = Mock.mock({
   'items|20': [{
     id: '@zip',
     name: '@cname',
-    'department|1': ['行政', '后勤', '财务', '销售'],
+    'department|1': ['行政', '人事', '财务', '业务'],
     'type|1': ['上班', '下班'],
     time: '@datetime',
     remark: '无'

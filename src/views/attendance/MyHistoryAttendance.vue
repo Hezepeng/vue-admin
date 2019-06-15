@@ -7,8 +7,7 @@
             data.Person.name.toLowerCase().includes(search.toLowerCase())||
             data.Person.department.toLowerCase().includes(search.toLowerCase()) ||
             data.type.toLowerCase().includes(search.toLowerCase()) ||
-            data.time.toString().toLowerCase().includes(search.toLowerCase()) ||
-            data.remark.toLowerCase().includes(search.toLowerCase()))"
+            data.time.toString().toLowerCase().includes(search.toLowerCase()))"
           height="600"
           border
           style="width: 100%"
@@ -28,7 +27,7 @@
             label="部门"
             width="180"
             sortable
-            :filters="[{ text: '行政', value: '行政' }, { text: '后勤', value: '后勤' }, { text: '财务', value: '财务' }, { text: '销售', value: '销售' }]"
+            :filters="[{ text: '行政', value: '行政' }, { text: '人事', value: '人事' }, { text: '财务', value: '财务' }, { text: '业务', value: '业务' }]"
             :filter-method="filterDepartment"
             filter-placement="bottom-end"
           />
@@ -37,17 +36,7 @@
             label="打卡类型"
             width="120"
             sortable
-            :filters="[{ text: '上班', value: '上班' }, { text: '下班', value: '下班' }]"
-            :filter-method="filterType"
-            filter-placement="bottom-end"
           >
-            <template slot-scope="scope">
-              <el-tag
-                :type="scope.row.type === '上班' ? 'primary' : 'success'"
-                disable-transitions
-              >{{ scope.row.type }}
-              </el-tag>
-            </template>
           </el-table-column>
           <el-table-column
             prop="time"
@@ -55,10 +44,10 @@
             sortable
             width="180"
           />
-          <el-table-column
-            prop="remark"
-            label="备注"
-          />
+          <!--<el-table-column-->
+          <!--prop="remark"-->
+          <!--label="备注"-->
+          <!--/>-->
           <el-table-column align="center">
             <template slot="header" slot-scope="scope">
               <el-input
@@ -68,15 +57,15 @@
               />
             </template>
             <template slot-scope="scope">
-              <el-button
+              <!--<el-button-->
+                <!--size="mini"-->
+                <!--type="text"-->
+                <!--@click="onEditRow(scope.$index, scope.row)"-->
+              <!--&gt;编辑-->
+              <!--</el-button>-->
+            <el-button
                 size="mini"
-                type="primary"
-                @click="onEditRow(scope.$index, scope.row)"
-              >编辑
-              </el-button>
-              <el-button
-                size="mini"
-                type="danger"
+                type="text"
                 @click="onDeleteRow(scope.$index, scope.row)"
               >删除
               </el-button>

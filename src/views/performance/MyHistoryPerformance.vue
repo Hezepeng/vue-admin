@@ -9,7 +9,7 @@
             data.Person.position.toLowerCase().includes(search.toLowerCase()) ||
             data.time.toString().toLowerCase().includes(search.toLowerCase()) ||
             data.completeTask.toString().toLowerCase().includes(search.toLowerCase()) ||
-            data.targetTask.toLowerCase().includes(search.toLowerCase()))"
+            data.targetTask.toString().toLowerCase().includes(search.toLowerCase()))"
           height="600"
           border
           style="width: 100%"

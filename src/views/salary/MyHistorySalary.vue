@@ -9,7 +9,7 @@
             data.Person.position.toLowerCase().includes(search.toLowerCase()) ||
             data.time.toString().toLowerCase().includes(search.toLowerCase()) ||
             data.completeTask.toString().toLowerCase().includes(search.toLowerCase()) ||
-            data.targetTask.toLowerCase().includes(search.toLowerCase()))"
+            data.targetTask.toString().toLowerCase().includes(search.toLowerCase()))"
           height="600"
           border
           style="width: 100%"
@@ -89,6 +89,18 @@
             sortable
             width="120"
           />
+          <el-table-column
+            align="center"
+            width="180"
+          >
+            <template slot="header" slot-scope="scope">
+              <el-input
+                v-model="search"
+                size="mini"
+                placeholder="输入关键字搜索"
+              />
+            </template>
+          </el-table-column>
         </el-table>
       </el-col>
     </el-row>

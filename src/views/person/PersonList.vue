@@ -3,13 +3,12 @@
     <el-row>
       <el-col :span="24">
         <el-table
-          :data="tableData.filter(data => !search || data.id.toLowerCase().includes(search.toLowerCase()) ||
-            data.name.toLowerCase().includes(search.toLowerCase()) ||
-            data.sex.toLowerCase().includes(search.toLowerCase()) ||
-            data.school.toLowerCase().includes(search.toLowerCase()) ||
-            data.department.toLowerCase().includes(search.toLowerCase()) ||
-            data.position.toLowerCase().includes(search.toLowerCase()) ||
-            data.remark.toLowerCase().includes(search.toLowerCase()))"
+          :data="tableData.filter(data => !search || data.username.toString().toLowerCase().includes(search.toString().toLowerCase()) ||
+            data.name.toString().toLowerCase().includes(search.toString().toLowerCase()) ||
+            data.sex.toString().toLowerCase().includes(search.toString().toLowerCase()) ||
+            data.school.toString().toLowerCase().includes(search.toString().toLowerCase()) ||
+            data.department.toString().toLowerCase().includes(search.toString().toLowerCase()) ||
+            data.position.toString().toLowerCase().includes(search.toString().toLowerCase()))"
           height="600"
           border
           style="width: 100%"
@@ -46,7 +45,7 @@
             label="部门"
             width="120"
             sortable
-            :filters="[{ text: '行政', value: '行政' }, { text: '后勤', value: '后勤' }, { text: '财务', value: '财务' }, { text: '销售', value: '销售' }]"
+            :filters="[{ text: '行政', value: '行政' }, { text: '人事', value: '人事' }, { text: '财务', value: '财务' }, { text: '业务', value: '业务' }]"
             :filter-method="filterDepartment"
             filter-placement="bottom-end"
           />
@@ -70,13 +69,13 @@
             <template slot-scope="scope">
               <el-button
                 size="mini"
-                type="primary"
+                type="text"
                 @click="onEditRow(scope.$index, scope.row)"
               >编辑
               </el-button>
-              <el-button
+<el-button
                 size="mini"
-                type="danger"
+                type="text"
                 @click="onDeleteRow(scope.$index, scope.row)"
               >删除
               </el-button>
@@ -91,10 +90,10 @@
           <el-form-item label="部门" prop="department">
             <el-col :span="12">
               <el-select v-model="editRow.department" placeholder="选择员工所属部分">
-                <el-option label="后勤" value="后勤" />
+                <el-option label="人事" value="人事" />
                 <el-option label="行政" value="行政" />
                 <el-option label="财务" value="财务" />
-                <el-option label="销售" value="销售" />
+                <el-option label="业务" value="业务" />
               </el-select>
             </el-col>
           </el-form-item>

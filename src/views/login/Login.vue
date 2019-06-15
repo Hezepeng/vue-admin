@@ -8,7 +8,7 @@
       label-position="left"
       :rules="loginRules"
     >
-      <h3 class="title">人事管理系统</h3>
+      <h3 class="title">外贸公司人事管理系统</h3>
       <el-form-item prop="username">
         <span class="svg-container">
           <svg-icon icon-class="user" />
