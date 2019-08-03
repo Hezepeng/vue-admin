@@ -34,7 +34,7 @@ const user = {
           .then(response => {
             const data = response.data
             Message({
-              message: response.message,
+              message: response.msg,
               type: 'success',
               duration: 3 * 1000
             })
@@ -51,12 +51,13 @@ const user = {
     // 获取用户信息
     getUserInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
-        getUserInfo(state.token)
+        getUserInfo()
           .then(response => {
             const data = response.data
-            if (data.roles && data.roles.length > 0) {
+            if (data.role && data.role.length > 0) {
               // 验证返回的roles是否是一个非空数组
-              commit('SET_ROLES', data.roles)
+              const roles = new Array(data.role)
+              commit('SET_ROLES', roles)
             } else {
               reject('getInfo: roles must be a non-null array !')
             }
@@ -89,7 +90,9 @@ const user = {
     // 前端 登出
     fedLogOut({ commit }) {
       return new Promise(resolve => {
+        console.log('开始fedLogOut')
         commit('SET_TOKEN', '')
+        commit('SET_ROLES', [])
         removeToken()
         resolve()
       })

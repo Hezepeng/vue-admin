@@ -118,3 +118,17 @@ export function deepCopy(obj) {
   }
   return result
 }
+
+/**
+ * 关闭当前浏览器窗口
+ */
+export function closeWindow() {
+  const userAgent = navigator.userAgent;
+  if (userAgent.indexOf('Firefox') !== -1 || userAgent.indexOf('Chrome') !== -1) {
+    location.href = 'about:blank'
+  } else {
+    window.opener = null
+    window.open('', '_self')
+  }
+  window.close()
+}
